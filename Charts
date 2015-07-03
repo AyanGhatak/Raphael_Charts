@@ -1,0 +1,194 @@
+<html>
+    <head>
+        <title>Difusion Charts</title>
+        <script type="text/javascript" src="raphael-min.js"></script>
+    </head>
+    <body>
+    <script type="text/javascript">
+    
+    var dimension=[500,350],
+        paper = Raphael(0, 0, dimension[0], dimension[1]),
+        chart_dimension=new Array(2),
+        values={
+            "chart": {
+                "caption": "Monthly revenue for last year",
+                "subCaption": "Ayan's DiffusionChart",
+                "xAxisName": "Month",
+                "yAxisName": "Revenues (In USD)",
+                "numberPrefix": "$",
+                "paletteColors": "#0075c2",
+                "bgColor": "#FFA500",
+                "borderAlpha": "20",
+                "canvasBorderAlpha": "0",
+                "usePlotGradientColor": "1",
+                "plotBorderAlpha": "10",
+                "placevaluesInside": "1",
+                "rotatevalues": "1",
+                "valueFontColor": "#ffffff",
+                "showXAxisLine": "1",
+                "xAxisLineColor": "#999999",
+                "divlineColor": "#999999",
+                "divLineDashed": "1",
+                "showAlternateHGridColor": "0",
+                "subcaptionFontBold": "0",
+                "subcaptionFontSize": "14"
+            },
+            "data": [
+                {
+                    "label": "Jan",
+                    "value": "42"
+                },
+                {
+                    "label": "Feb",
+                    "value": "81"
+                },
+                {
+                    "label": "Mar",
+                    "value": "72"
+                },
+                {
+                    "label": "Apr",
+                    "value": "55"
+                },
+                {
+                    "label": "May",
+                    "value": "91"
+                },
+                {
+                    "label": "Jun",
+                    "value": "51"
+                },
+                {
+                    "label": "Jul",
+                    "value": "68"
+                },
+                {
+                    "label": "Aug",
+                    "value": "62"
+                },
+                {
+                    "label": "Sep",
+                    "value": "61"
+                },
+                {
+                    "label": "Oct",
+                    "value": "49"
+                },
+                {
+                    "label": "Nov",
+                    "value": "90"
+                },
+                {
+                    "label": "Dec",
+                    "value": "73"
+                }
+            ],
+            "trendlines": [
+                {
+                    "line": [
+                        {
+                            "startvalue": "70",
+                            "type" : "-",
+                            //"color": "#00f",
+                            "valueOnRight": "1",
+                            "displayvalue": "Monthly \n Target"
+                        }
+                    ]
+                }
+            ]
+        },
+        no_of_data = values.data.length,
+        spacing = (0.8*dimension[0])/(no_of_data+1),
+        chart_origin=[0.1*dimension[0],0.9*dimension[1]],
+        i,
+        column_local_origin=new Array(2),
+        margin,
+        maximum_data=0,
+        scale_factor=1,
+        width,
+        increment,
+        benchmark=0;
+         
+    scale_factor=(0.6*dimension[1])/get_max();
+    increment = Math.round((1.05*get_max())/5);
+
+    
+
+    (function format_background(){
+        paper.rect(0,0,dimension[0],dimension[1]).attr({fill:""+values.chart.bgColor});
+
+        paper.rect(chart_origin[0],0.25*dimension[1],0.8*dimension[0],0.65*dimension[1]).attr({"fill":"fff"});
+
+        trendline();
+
+        paper.text(dimension[0]/2, dimension[1]/8, ""+values.chart.caption)
+                    .attr({ "font-size": 16, "font-family": "Arial, Helvetica, sans-serif" });
+
+        paper.text(dimension[0]/2, dimension[1]/5, ""+values.chart.subCaption)
+             .attr({ "font-size": 12, "font-family": "Arial, Helvetica, sans-serif" });
+
+        paper.text(0.55*dimension[0],0.97*dimension[1] , ""+values.chart.xAxisName)
+             .attr({ "font-size": 10, "font-family": "Arial, Helvetica, sans-serif", "fill": "#000" });
+
+        paper.text(0.05*dimension[0],0.55*dimension[1] , ""+values.chart.yAxisName)
+             .rotate(-90);
+   
+    })();
+
+    (function trendline(){
+        paper.path("M"+""+chart_origin[0]+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor))+"L"+(0.9*dimension[0])+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor)))
+        .attr({ "fill": ""+values.trendlines[0].line[0].color });
+    
+        paper.text(0.95*dimension[0],(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor)),""+values.trendlines[0].line[0].displayvalue);
+    })();
+        
+    (function format_chartArea(){
+        for(i=0;i<=5;i++){
+            paper.text(chart_origin[0],(chart_origin[1]-(i*increment*scale_factor)),""+values.chart.numberPrefix+" "+benchmark);
+            paper.path("M"+""+chart_origin[0]+" "+(chart_origin[1]-(i*increment*scale_factor))+"L"+(0.9*dimension[0])+" "+(chart_origin[1]-(i*increment*scale_factor)))
+            .attr({"stroke-dasharray": ". "});
+            benchmark+=increment;
+        }
+    })();
+    
+    function get_max(){
+        for(i=0;i<no_of_data;i++){
+            if(values.data[i].value > maximum_data){
+                maximum_data=values.data[i].value;
+            }
+        }
+        return maximum_data;
+    }
+
+    function trendline(){
+        paper.path("M"+""+chart_origin[0]+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor))+"L"+(0.9*dimension[0])+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor)))
+        .attr({ "fill": ""+values.trendlines[0].line[0].color });
+    
+        paper.text(0.95*dimension[0],(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor)),""+values.trendlines[0].line[0].displayvalue);
+    };
+    
+    (function render_col2D(){
+         for(i=0;i<no_of_data;i++){       
+            width=spacing/2;
+            column_local_origin=[(chart_origin[0]+(spacing*(i+1))),(chart_origin[1]-((values.data[i].value)*scale_factor))];
+            if(values.chart.usePlotGradientColor!=0){
+                paper.rect(column_local_origin[0], column_local_origin[1], width , (values.data[i].value)*scale_factor).attr({fill:'90-#fff-'+values.chart.paletteColors});
+            }
+
+            else
+            {
+                paper.rect(column_local_origin[0], column_local_origin[1], width , (values.data[i].value)*scale_factor).attr({fill:''+values.chart.paletteColors});   
+            }
+           
+            if(spacing<=20){
+                paper.text(column_local_origin[0]+(width/2),chart_origin[1]+0.8*(width/1.2), ""+values.data[i].label).rotate(-90);
+            }
+            else{
+                paper.text(column_local_origin[0]+(width/2),chart_origin[1]+0.8*(width/1.2), ""+values.data[i].label);
+            }
+            paper.text(column_local_origin[0]+(width/2),(1.1*column_local_origin[1]), ""+values.chart.numberPrefix+values.data[i].value).attr({fill: "#fff"}).rotate(-90);
+        }
+    })(); 
+    </script>
+	</body>
+</html>
