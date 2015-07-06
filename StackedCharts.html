@@ -145,7 +145,7 @@
         
 
         
-
+    //The stack behaves as a column chart when indivual elements are added.So this sum_data() returns the summed value for each dataset.
     sum= (function sum_data(){
         var sum=new Array(no_of_data);
         for(i=0;i<no_of_data;i++){
@@ -154,6 +154,7 @@
         return sum;
     })();
     
+    //returns the maximum value available. Maximum data value is  very useful for allocating finding the scale factor.
     function get_max(){
         
         for(i=0;i<no_of_data;i++){
@@ -166,7 +167,8 @@
 
     scale_factor=((upDownMargin[2]-upDownMargin[1])*dimension[1])/(1.1*get_max());
     increment = Math.round((1.05 *get_max())/5);
-    
+
+    //This part can be optional, but can be called if there is a target to be fulfilled.     
     function trendline(){
         paper.path("M"+""+chart_origin[0]+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor))+"L"+(chart_origin[0]+((leftRightMargin[2]-leftRightMargin[1])*dimension[0]))+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor)))
         .attr({ "fill": ""+values.trendlines[0].line[0].color, "stroke-dasharray": "--"});
@@ -174,6 +176,7 @@
         paper.text(((leftRightMargin[3]+leftRightMargin[2])/2)*dimension[0],(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor)),""+values.trendlines[0].line[0].displayvalue);
     }
 
+    //format_background() as the name suggest is to print the borders for both window and chart area(Area covered only by charts).It displays the captions, sub captions, labels, legends, etc.
     (function format_background(){
         paper.rect(0,0,dimension[0],dimension[1]).attr({fill:""+values.chart.bgColor});
 
@@ -203,6 +206,8 @@
    
     })();
 
+    //format_chartArea is specific to the chart area only. The entire Y-axis is divided into 5 equispaced gaps for the convinience.
+
     (function format_chartArea(){
         for(i=0;i<=5;i++){
             paper.text(0.45*dimension[0]*(leftRightMargin[1]+leftRightMargin[0]),(chart_origin[1]-(i*increment*scale_factor)),""+values.chart.numberPrefix+" "+benchmark);
@@ -213,13 +218,16 @@
     })();
     
 
+    //render_col2DStack is required to render the 2D stack chart
     (function render_col2DStack(){
         
         for(i=0;i<no_of_data;i++){  
             
+            //calculating the local origin for each column in the stack.
             column_local_origin1 = [(chart_origin[0]+(spacing*(i+1))),(chart_origin[1]-((values.dataset[0].data[i].value)*scale_factor))];
             column_local_origin2 = [(chart_origin[0]+(spacing*(i+1))),(chart_origin[1]-(sum[i]*scale_factor))];
 
+            // the following if-else block is to determine if a gradient is required or not.
             if(values.chart.usePlotGradientColor!=0){
                 paper.rect(column_local_origin2[0], column_local_origin2[1], width , ((sum[i])*scale_factor)).attr({fill:'90-#fff-'+values.chart.paletteColors[1]});
                 paper.rect(column_local_origin1[0], column_local_origin1[1], width , ((values.dataset[0].data[i].value)*scale_factor)).attr({fill:'90-#fff-'+values.chart.paletteColors[0]});
@@ -232,6 +240,7 @@
                 paper.rect(column_local_origin1[0], column_local_origin1[1], width , ((values.dataset[0].data[i].value)*scale_factor)).attr({fill:''+values.chart.paletteColors[0]});  
             }
            
+            // when the inter-spacings of columns are reduced, we might need to rotate the labels of X-axis for a better view. Generally increasing the number of dataset when required to be visualised in a limited space, the spacings are reduced
             if(spacing<=70){
                 paper.text(column_local_origin1[0]+(width/2),(upDownMargin[3]+upDownMargin[2])*0.5*dimension[1], ""+values.categories[0].category[i].label).rotate(-90);
 
