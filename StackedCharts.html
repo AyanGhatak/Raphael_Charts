@@ -12,7 +12,7 @@
         values={
             "chart": {
                 "caption": "Product-wise quarterly revenue in current year",
-                "subCaption": "Ayan's FusionChart",
+                "subCaption": "FusionChart",
                 "xAxisname": "Quarter",
                 "yAxisName": "Revenue (In USD)",
                 "numberPrefix": "$",
@@ -74,7 +74,7 @@
                 },
             
                 {
-                    "seriesname": "Non-Food Products",
+                    "seriesname": "Non-Food \n Products",
                     "data": [
                         {
                             "value": 131.4
@@ -93,17 +93,19 @@
             ],
 
             "margin" : {
-                "horizontal" : {
+                "upDown" : {
                     "caption": 0.05,
-                    "subCaption": 0.05,
-                    "xAxislabel" : 0.05,
-                    "xAxisName" : 0.05,
-                    "legend" : 0.05
+                    "subCaption": 0.1,
+                    "chartArea": 0.85,
+                    "xAxislabel" : 0.9,
+                    "xAxisName" : 0.95,
+                    "end_point" : 1
                 },
-                "vertical" : {
-                    "right_part": 0.1,
+                "leftRight" : {
                     "yAxislabel" : 0.05,
-                    "yAxisName" : 0.05,
+                    "yAxisName" : 0.1,
+                    "right_part": 0.9,
+                    "trendnote" : 1
                 }    
             },
             "trendlines": [
@@ -112,7 +114,6 @@
                         {
                             "startvalue": "190",
                             "type" : "-",
-                            //"color": "#00f",
                             "valueOnRight": "1",
                             "displayvalue": "Monthly \n Target"
                         }
@@ -121,10 +122,15 @@
             ]
 
         },
+
         no_of_data = values.dataset[0].data.length,
-        upDownMargin=[0.05,0.1,0.85,0.9,0.95,1],
-        leftRightMargin=[0.05,0.1,0.9,1],
-        spacing = ((leftRightMargin[2]-leftRightMargin[1])*dimension[0])/(no_of_data+1),
+
+        upDownMargin=[values.margin.upDown.caption, values.margin.upDown.subCaption , values.margin.upDown.chartArea, values.margin.upDown.xAxislabel, values.margin.upDown.xAxisName, values.margin.upDown.end_point],
+
+        leftRightMargin=[values.margin.leftRight.yAxislabel, values.margin.leftRight.yAxisName, values.margin.leftRight.right_part, values.margin.leftRight.trendnote],
+
+        spacing = ((leftRightMargin[2] - leftRightMargin[1])* dimension[0])/(no_of_data+1),
+
         chart_origin=[leftRightMargin[1]*dimension[0],upDownMargin[2]*dimension[1]],
         i=0,
         column_local_origin=new Array(2),
@@ -138,7 +144,7 @@
         column_local_origin2=new Array(2);
         
 
-        alert(values.chart.paletteColors[1]);
+        
 
     sum= (function sum_data(){
         var sum=new Array(no_of_data);
@@ -159,7 +165,7 @@
     }
 
     scale_factor=((upDownMargin[2]-upDownMargin[1])*dimension[1])/(1.1*get_max());
-    increment = Math.round((1.3 *get_max())/5);
+    increment = Math.round((1.05 *get_max())/5);
     
     function trendline(){
         paper.path("M"+""+chart_origin[0]+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor))+"L"+(chart_origin[0]+((leftRightMargin[2]-leftRightMargin[1])*dimension[0]))+" "+(chart_origin[1]-((values.trendlines[0].line[0].startvalue)*scale_factor)))
@@ -186,6 +192,14 @@
 
         paper.text(0.5*leftRightMargin[0]*dimension[0],0.5*(upDownMargin[2]+upDownMargin[1])*dimension[1] , ""+values.chart.yAxisName)
              .rotate(-90);
+
+        paper.rect((1.15*0.5*dimension[0]*(leftRightMargin[2]+leftRightMargin[1])),(0.5*dimension[1]*(upDownMargin[5]+upDownMargin[3])),0.5*dimension[1]*(upDownMargin[5]-upDownMargin[4]),0.5*dimension[1]*(upDownMargin[5]-upDownMargin[4])).attr({fill:''+values.chart.paletteColors[1]});
+
+        paper.text((1.25*0.5*dimension[0]*(leftRightMargin[2]+leftRightMargin[1])),(0.5*dimension[1]*(upDownMargin[5]+upDownMargin[4])),'' + values.dataset[1].seriesname);
+
+        paper.rect((0.6*0.5*dimension[0]*(leftRightMargin[2]+leftRightMargin[1])),(0.5*dimension[1]*(upDownMargin[5]+upDownMargin[3])),0.5*dimension[1]*(upDownMargin[5]-upDownMargin[4]),0.5*dimension[1]*(upDownMargin[5]-upDownMargin[4])).attr({fill:''+values.chart.paletteColors[0]});
+
+        paper.text((0.75*0.5*dimension[0]*(leftRightMargin[2]+leftRightMargin[1])),(0.5*dimension[1]*(upDownMargin[5]+upDownMargin[4])), '' + values.dataset[0].seriesname);       
    
     })();
 
@@ -197,10 +211,9 @@
             benchmark+=increment;
         }
     })();
-    debugger;
+    
 
     (function render_col2DStack(){
-        alert(spacing);
         
         for(i=0;i<no_of_data;i++){  
             
@@ -234,7 +247,7 @@
 
         }
     })();
-    
+
     </script>
 	</body>
 </html>
