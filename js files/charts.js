@@ -1,12 +1,12 @@
-function AyanCharts(obj)
+function AyanCharts()
 {
+	//alert(data);
+
 	this.render=function(){
 
-    //debugger;
-		var base_obj = new Base(obj);
-
+    	var base_obj = new Base();
 		base_obj.parse();
 		base_obj.render();
 
-  }
+  	}
 }  
