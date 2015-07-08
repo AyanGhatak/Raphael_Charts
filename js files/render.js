@@ -1,5 +1,6 @@
 function Renderr(page_width,page_height)
 {
+	debugger;
 	var draw = new DrawingAPI(page_width,page_height);
 		
 	this.format_background =function(chart, origin, width, height){
