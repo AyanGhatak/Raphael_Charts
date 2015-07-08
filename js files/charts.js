@@ -1,7 +1,5 @@
 function AyanCharts()
 {
-	//alert(data);
-
 	this.render=function(){
 
     	var base_obj = new Base();

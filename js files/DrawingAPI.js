@@ -4,7 +4,7 @@ function DrawingAPI(width,height)
 	
 	this.rect =function(x1, y1,x2,y2, e){
 		if(e === 'null')
-			paper.rect(x1, y1, x2 , y2);
+			paper.rect(x1, y1, x2 , y2).attr({"fill" : "#fff"});
 		else{
 			event_obj.drill(x1, y1,x2,y2, e)
 		}
@@ -19,7 +19,7 @@ function DrawingAPI(width,height)
 					 .attr({"stroke": "#000","stroke-width": 2});
 		
 		var hoverIn = function() {
-        	this.attr({"stroke": "#E3E3E3"});
+        	this.attr({"stroke": "#f00"});
   		}
     
     	var hoverOut = function() {

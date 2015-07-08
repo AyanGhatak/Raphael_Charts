@@ -2,8 +2,8 @@ function Event(){
 
     this.drill=function(x1, y1, x2 , y2, drill){
     	
-    	paper.rect(x1, y1, x2 , y2)
-		     .attr({fill: "#ff0"})
+    	var a = paper.rect(x1, y1, x2 , y2)
+		     .attr({fill: "#0f0","stroke": "#000","stroke-width": 0})
 			 .data("i", drill)
 			 .click(function () {
 				paper.remove();
@@ -23,6 +23,15 @@ function Event(){
 					 });
 				paper.text(0.075*data.chart.width, 0.125*data.chart.height, "Back");
 			});
+		var hoverIn = function() {
+        	this.attr({"stroke": "#E3E3E3", fill: "#f00"});
+  		}
+    
+    	var hoverOut = function() {
+        	this.attr({"stroke": "#000", fill: "#ff0"});    
+    	}
+    
+    	a.hover(hoverIn, hoverOut, a, a);
 	
 	}
 }
