@@ -1,0 +1,84 @@
+<html>
+<head>
+    <script type="text/javascript" src="charts.js"></script>
+    <script type="text/javascript" src="base.js"></script>
+    <script type="text/javascript" src="store.js"></script>
+    <script type="text/javascript" src="render.js"></script>
+    <script type="text/javascript" src="raphael-min.js"></script>
+    <script type="text/javascript" src="DrawingAPI.js"></script>
+    
+    <script>
+        
+      var  json={
+        "chart":{
+          "width":"900",
+          "height":"500",
+          "caption":"Monthly revenue",
+          "subcaption":"Last Year",
+          "xaxisname":"month",
+          "yaxisname":"revenue",
+          "numberPrefix": "$",
+          "theme": "fint"
+        },
+        "data": [
+            {
+                "label": "Jan",
+                "value": "420000"
+            },
+            {
+                "label": "Feb",
+                "value": "810000"
+            },
+            {
+                "label": "Mar",
+                "value": "720000"
+            },
+            {
+                "label": "Apr",
+                "value": "550000"
+            },
+            {
+                "label": "May",
+                "value": "910000"
+            },
+            {
+                "label": "Jun",
+                "value": "510000"
+            },
+            {  
+                "label": "Jul",
+                "value": "680000"
+            },
+            {
+                "label": "Aug",
+                "value": "620000"
+            },
+            {
+                "label": "Sep",
+                "value": "610000"
+            },
+            {
+                "label": "Oct",
+                "value": "490000"
+            },
+            {
+                "label": "Nov",
+                "value": "900000"
+            },
+            {
+                "label": "Dec",
+                "value": "730000"
+            }
+          ]
+         };
+      debugger;      
+      var chart = new AyanCharts(json);
+      window.onload=function(){
+        paper = Raphael(0, 0, json.chart.width, json.chart.height);
+        chart.render();
+      }
+    </script>
+</head>
+<body>
+</body>
+</html>
