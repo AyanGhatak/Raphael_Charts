@@ -8,75 +8,142 @@
     <script type="text/javascript" src="js files/DrawingAPI.js"></script>
     
     <script>
-        
-      var  json={
-        "chart":{
-          "width":"900",
-          "height":"500",
-          "caption":"Monthly revenue",
-          "subcaption":"Last Year",
-          "xaxisname":"month",
-          "yaxisname":"revenue",
-          "numberPrefix": "$",
-          "theme": "fint"
-        },
-        "data": [
-            {
-                "label": "Jan",
-                "value": "420000"
+        var data = {
+            "chart": {
+                "width":"900",
+                "height":"500",
+                "caption": "Quarterly revenue",
+                "subcaption": "Last year",
+                "xaxisname": "Quarter (Click to display the value)",
+                "yaxisname": "Revenue (In USD)",
+                "numberPrefix": "$",
+                "theme": "fint"
             },
-            {
-                "label": "Feb",
-                "value": "810000"
-            },
-            {
-                "label": "Mar",
-                "value": "720000"
-            },
-            {
-                "label": "Apr",
-                "value": "550000"
-            },
-            {
-                "label": "May",
-                "value": "910000"
-            },
-            {
-                "label": "Jun",
-                "value": "510000"
-            },
-            {  
-                "label": "Jul",
-                "value": "680000"
-            },
-            {
-                "label": "Aug",
-                "value": "620000"
-            },
-            {
-                "label": "Sep",
-                "value": "610000"
-            },
-            {
-                "label": "Oct",
-                "value": "490000"
-            },
-            {
-                "label": "Nov",
-                "value": "900000"
-            },
-            {
-                "label": "Dec",
-                "value": "730000"
-            }
-          ]
-         };
-      debugger;      
-      var chart = new AyanCharts(json);
-      window.onload=function(){
-        paper = Raphael(0, 0, json.chart.width, json.chart.height);
+            "data": [
+                {
+                    "label": "Q1",
+                    "value": "1950000",
+                    "link": {
+                        "chart": {
+                            "caption": "Monthly Revenue",
+                            "subcaption": "First Quarter",
+                            "xaxisname": "Month",
+                            "yaxisname": "Revenue (In USD)",
+                            "numberPrefix": "$",
+                            "theme": "fint"
+                        },
+                        "data": [
+                            {
+                                "label": "Jan",
+                                "value": "420000"
+                            },
+                            {
+                                "label": "Feb",
+                                "value": "810000"
+                            },
+                            {
+                                "label": "Mar",
+                                "value": "720000"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "label": "Q2",
+                    "value": "1970000",
+                    "link": {
+                        "chart": {
+                            "caption": "Monthly Revenue",
+                            "subcaption": "Second Quarter",
+                            "xaxisname": "Month",
+                            "yaxisname": "Revenue (In USD)",
+                            "numberPrefix": "$",
+                            "theme": "fint"
+                        },
+                        "data": [
+                            {
+                                "label": "Apr",
+                                "value": "550000"
+                            },
+                            {
+                                "label": "May",
+                                "value": "910000"
+                            },
+                            {
+                                "label": "Jun",
+                                "value": "510000"
+                            }
+                        ]
+                    } 
+                },
+                {
+                    "label": "Q3",
+                    "value": "1910000",
+                    "link": {
+                        "chart": {
+                            "caption": "Monthly Revenue",
+                            "subcaption": "Third Quarter",
+                            "xaxisname": "Month",
+                            "yaxisname": "Revenue (In USD)",
+                            "numberPrefix": "$",
+                            "theme": "fint"
+                        },
+                        "data": [
+                            {
+                                "label": "Jul",
+                                "value": "680000"
+                            },
+                            {
+                                "label": "Aug",
+                                "value": "620000"
+                            },
+                            {
+                                "label": "Sep",
+                                "value": "610000"
+                            }
+                        ]
+                    }  
+                },
+                {
+                    "label": "Q4",
+                    "value": "2120000",
+                    "link": {
+                        "chart": {
+                            "caption": "Monthly Revenue",
+                            "subcaption": "Fourth Quarter",
+                            "xaxisname": "Month",
+                            "yaxisname": "Revenue (In USD)",
+                            "numberPrefix": "$",
+                            "theme": "fint"
+                        },
+                        "data": [
+                            {
+                                "label": "Oct",
+                                "value": "490000"
+                            },
+                            {
+                                "label": "Nov",
+                                "value": "900000"
+                            },
+                            {
+                                "label": "Dec",
+                                "value": "730000"
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        var chart = new AyanCharts();
+        window.onload=function(){
+            debugger;   
+            paper = Raphael(0, 0, data.chart.width, data.chart.height);
+            debugger;
+            
         chart.render();
-      }
+
+        }
     </script>
 </head>
 <body>

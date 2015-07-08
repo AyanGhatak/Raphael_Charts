@@ -1,4 +1,4 @@
-function Base(obj){
+function Base(){
 
     var no_of_data,
      	spacing,
@@ -12,25 +12,26 @@ function Base(obj){
         increment;
 
     var s = new Store();
-    var r = new Renderr(obj.chart.width, obj.chart.height);
+    var r = new Renderr(data.chart.width, data.chart.height);
 
   
   	this.parse=function(){
-    	debugger;
-    	no_of_data = s.number_of_data(obj.data);
-     	spacing = s.space(obj.chart.width, no_of_data);
-     	chart_origin = s.chart_origin(obj.chart.width, obj.chart.height);
-     	maximum_data=s.maximum_data(obj.data, no_of_data);
-        scale_factor=s.scale_factor(obj.chart.height,maximum_data);
+    	//debugger;
+
+    	no_of_data = s.number_of_data(data.data);
+     	spacing = s.space(data.chart.width, no_of_data);
+     	chart_origin = s.chart_origin(data.chart.width, data.chart.height);
+     	maximum_data=s.maximum_data(data.data, no_of_data);
+        scale_factor=s.scale_factor(data.chart.height,maximum_data);
         increment=s.increment(maximum_data);
 
     }
 
  	this.render=function()
  	{
-      debugger;
-      r.format_background(obj.chart, chart_origin, obj.chart.width, obj.chart.height);
-      r.format_chartArea(chart_origin,increment,scale_factor, obj.chart.width);
-      r.plot_col2d(no_of_data,spacing,chart_origin,obj.data,scale_factor, obj.chart.numberPrefix);
+      //debugger;
+      r.format_background(data.chart, chart_origin, data.chart.width, data.chart.height);
+      r.format_chartArea(chart_origin,increment,scale_factor, data.chart.width);
+      r.plot_col2d(no_of_data,spacing,chart_origin,data.data,scale_factor, data.chart.numberPrefix);
     }
  }
